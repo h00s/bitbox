@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/h00s/bitbox/api/config"
+	"github.com/h00s/bitbox/api/db"
 	"github.com/h00s/bitbox/api/mmc/middleware"
 	"github.com/h00s/bitbox/api/services"
 )
@@ -18,9 +19,9 @@ type API struct {
 	services *services.Services
 }
 
-func NewAPI(config *config.Config, logger *log.Logger) *API {
+func NewAPI(config *config.Config, database *db.Database, logger *log.Logger) *API {
 	server := fiber.New()
-	services := services.NewServices(logger)
+	services := services.NewServices(database, logger)
 	servicesMiddleware := middleware.NewServicesMiddleware(services)
 	//modelsMiddleware := middleware.NewModelsMiddleware(services)
 	//limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
@@ -37,7 +38,7 @@ func NewAPI(config *config.Config, logger *log.Logger) *API {
 }
 
 func (api *API) Start() {
-	//api.services.Logger.Println("Starting server on :8080")
+	api.services.Logger.Println("Starting server on :8080")
 	api.setRoutes()
 	go func() {
 		if err := api.server.Listen(":8080"); err != nil && err != http.ErrServerClosed {
