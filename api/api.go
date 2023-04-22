@@ -8,28 +8,31 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/h00s/bitbox/api/config"
+	"github.com/h00s/bitbox/api/mmc/middleware"
+	"github.com/h00s/bitbox/api/services"
 )
 
 type API struct {
-	config *config.Config
-	server *fiber.App
-	//services *services.Services
+	config   *config.Config
+	server   *fiber.App
+	services *services.Services
 }
 
 func NewAPI(config *config.Config, logger *log.Logger) *API {
 	server := fiber.New()
-	//services := services.NewServices(database, memStore, logger)
-	//servicesMiddleware := middleware.NewServicesMiddleware(services)
+	services := services.NewServices(logger)
+	servicesMiddleware := middleware.NewServicesMiddleware(services)
 	//modelsMiddleware := middleware.NewModelsMiddleware(services)
 	//limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
 
-	//server.Use(servicesMiddleware.ServicesMiddleware)
+	server.Use(servicesMiddleware.ServicesMiddleware)
 	//server.Use(modelsMiddleware.ModelsMiddleware)
 	//server.Use(limiterMiddleware.LimiterMiddleware())
 
 	return &API{
-		config: config,
-		server: server,
+		config:   config,
+		server:   server,
+		services: services,
 	}
 }
 
@@ -38,7 +41,7 @@ func (api *API) Start() {
 	api.setRoutes()
 	go func() {
 		if err := api.server.Listen(":8080"); err != nil && err != http.ErrServerClosed {
-			//api.services.Logger.Fatal("Error starting server: " + err.Error())
+			api.services.Logger.Fatal("Error starting server: " + err.Error())
 		}
 	}()
 }
@@ -48,6 +51,6 @@ func (api *API) WaitForShutdown() {
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	if err := api.server.Shutdown(); err != nil {
-		//api.services.Logger.Fatal(err)
+		api.services.Logger.Fatal(err)
 	}
 }
