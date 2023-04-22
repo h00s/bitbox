@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"os"
+
+	"github.com/h00s/bitbox/api/config"
+)
 
 func main() {
-	fmt.Println("Hello bitbox!")
+	config := config.NewConfig()
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+	logger.Println(config.Database.Host)
 }
