@@ -2,6 +2,6 @@
   @import './App.css';
 </style>
 
-<div>
+<h1 class="text-3xl font-bold underline">
   Hello bitbox!
-</div>
+</h1>
