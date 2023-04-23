@@ -1,7 +1,10 @@
-<style>
-  @import './app.css';
-</style>
+<script>
+  import Navbar from "./navbar/Navbar.svelte";
+  import Editor from "./editor/Editor.svelte";
+</script>
 
-<h1 class="text-3xl font-bold underline">
-  Hello bitbox!
-</h1>
+<div class="flex flex-col h-screen">
+  <Navbar />
+  <Editor />
+</div>
+
