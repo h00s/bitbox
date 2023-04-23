@@ -1,5 +1,5 @@
 <style>
-  @import './App.css';
+  @import './app.css';
 </style>
 
 <h1 class="text-3xl font-bold underline">
