@@ -1,11 +1,18 @@
 .DS_Store
-app/node_modules
-app/build
-app/.svelte-kit
-app/package
-app/.env
-app/.env.*
-app/!.env.example
-app/vite.config.js.timestamp-*
-app/vite.config.ts.timestamp-*
+
+# API
 config.toml
+
+# APP
+app/logs
+app/*.log
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
+app/pnpm-debug.log*
+app/lerna-debug.log*
+
+app/node_modules
+app/dist
+app/dist-ssr
+app/*.local
