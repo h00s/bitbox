@@ -1,7 +1,7 @@
 <style>
   .navbar {
-    background-color: #282C34;
-    border-bottom: 1px solid #696b71;
+    background-color: #34425A;
+    border-bottom: 1px solid #64728C;
   }
 </style>
 
