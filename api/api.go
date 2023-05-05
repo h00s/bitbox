@@ -23,12 +23,12 @@ func NewAPI(config *config.Config, database *db.Database, logger *log.Logger) *A
 	server := fiber.New()
 	services := services.NewServices(database, logger)
 	servicesMiddleware := middleware.NewServicesMiddleware(services)
+	limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
 	//modelsMiddleware := middleware.NewModelsMiddleware(services)
-	//limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
 
 	server.Use(servicesMiddleware.ServicesMiddleware)
+	server.Use(limiterMiddleware.LimiterMiddleware())
 	//server.Use(modelsMiddleware.ModelsMiddleware)
-	//server.Use(limiterMiddleware.LimiterMiddleware())
 
 	return &API{
 		config:   config,
