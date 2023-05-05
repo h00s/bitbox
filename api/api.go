@@ -8,7 +8,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/h00s/bitbox/api/config"
-	"github.com/h00s/bitbox/api/db"
 	"github.com/h00s/bitbox/api/mmc/middleware"
 	"github.com/h00s/bitbox/api/services"
 )
@@ -20,16 +19,8 @@ type API struct {
 }
 
 func NewAPI(config *config.Config, logger *log.Logger) *API {
-	db := db.NewDatabase(&config.Database)
-	if err := db.Connect(); err != nil {
-		logger.Fatal(err)
-	}
-	if err := db.Migrate(); err != nil {
-		logger.Fatal(err)
-	}
-
 	server := fiber.New()
-	services := services.NewServices(db, logger)
+	services := services.NewServices(config, logger)
 	servicesMiddleware := middleware.NewServicesMiddleware(services)
 	limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
 	//modelsMiddleware := middleware.NewModelsMiddleware(services)
@@ -59,7 +50,7 @@ func (api *API) WaitForShutdown() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	api.services.DB.Close()
+	api.services.Close()
 	if err := api.server.Shutdown(); err != nil {
 		api.services.Logger.Fatal(err)
 	}

@@ -3,6 +3,7 @@ package services
 import (
 	"log"
 
+	"github.com/h00s/bitbox/api/config"
 	"github.com/h00s/bitbox/api/db"
 )
 
@@ -11,9 +12,21 @@ type Services struct {
 	Logger *log.Logger
 }
 
-func NewServices(db *db.Database, logger *log.Logger) *Services {
+func NewServices(config *config.Config, logger *log.Logger) *Services {
+	db := db.NewDatabase(&config.Database)
+	if err := db.Connect(); err != nil {
+		logger.Fatal(err)
+	}
+	if err := db.Migrate(); err != nil {
+		logger.Fatal(err)
+	}
+
 	return &Services{
 		DB:     db,
 		Logger: logger,
 	}
+}
+
+func (s *Services) Close() {
+	s.DB.Close()
 }
