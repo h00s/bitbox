@@ -19,9 +19,17 @@ type API struct {
 	services *services.Services
 }
 
-func NewAPI(config *config.Config, database *db.Database, logger *log.Logger) *API {
+func NewAPI(config *config.Config, logger *log.Logger) *API {
+	db := db.NewDatabase(&config.Database)
+	if err := db.Connect(); err != nil {
+		logger.Fatal(err)
+	}
+	if err := db.Migrate(); err != nil {
+		logger.Fatal(err)
+	}
+
 	server := fiber.New()
-	services := services.NewServices(database, logger)
+	services := services.NewServices(db, logger)
 	servicesMiddleware := middleware.NewServicesMiddleware(services)
 	limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
 	//modelsMiddleware := middleware.NewModelsMiddleware(services)
@@ -51,6 +59,7 @@ func (api *API) WaitForShutdown() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
+	api.services.DB.Close()
 	if err := api.server.Shutdown(); err != nil {
 		api.services.Logger.Fatal(err)
 	}
