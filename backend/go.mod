@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/go-raptor/connector/postgres v0.2.3
-	github.com/go-raptor/raptor v0.6.5
+	github.com/go-raptor/raptor v0.6.6
 )
 
 require (
