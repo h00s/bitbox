@@ -7,11 +7,9 @@
 
 <style>
   .navbar {
-    background-color: #34425A;
-    border-bottom: 1px solid #64728C;
     min-height: 3rem;
   }
   .title {
-    text-shadow: #222222 0px 2px 4px;
+    text-shadow: black 0px 2px 4px;
   }
 </style>
