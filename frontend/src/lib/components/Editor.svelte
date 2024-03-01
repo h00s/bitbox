@@ -13,6 +13,7 @@
     editor.setOptions({
       showPrintMargin: false,
     });
+    editor.focus();
   });
 </script>
 
