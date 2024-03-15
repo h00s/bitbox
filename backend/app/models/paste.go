@@ -9,7 +9,7 @@ const validChars = "bcdfghmnprstvz23456789"
 type Paste struct {
 	ID        uint      `gorm:"primaryKey" json:"id"`
 	Title     string    `json:"title"`
-	Content   string    `json:"content"`
+	Content   string    `gorm:"type:text" json:"content"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
