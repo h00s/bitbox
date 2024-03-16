@@ -17,3 +17,10 @@ func (p *PastesService) Get(shortID string) (models.PublicPaste, error) {
 	}
 	return paste.ToPublicPaste(), nil
 }
+
+func (p *PastesService) Create(paste models.Paste) (models.PublicPaste, error) {
+	if err := p.DB.Create(&paste).Error; err != nil {
+		return paste.ToPublicPaste(), err
+	}
+	return paste.ToPublicPaste(), nil
+}

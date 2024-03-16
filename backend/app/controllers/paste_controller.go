@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-raptor/raptor"
+	"github.com/h00s/bitbox/app/models"
 	"github.com/h00s/bitbox/app/services"
 	"gorm.io/gorm"
 )
@@ -28,4 +29,16 @@ func (hc *PastesController) Get(c *raptor.Context) error {
 		}
 	}
 	return c.JSON(paste)
+}
+
+func (hc *PastesController) Create(c *raptor.Context) error {
+	var paste models.Paste
+	if err := c.BodyParser(&paste); err != nil {
+		return c.JSON("Invalid input", http.StatusBadRequest)
+	}
+	p, err := hc.Pastes().Create(paste)
+	if err != nil {
+		return c.JSON("Internal error", http.StatusInternalServerError)
+	}
+	return c.JSON(p, http.StatusCreated)
 }
