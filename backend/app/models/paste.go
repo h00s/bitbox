@@ -1,6 +1,7 @@
 package models
 
 import (
+	"strings"
 	"time"
 )
 
@@ -21,15 +22,17 @@ type PublicPaste struct {
 
 func (p *Paste) ToPublicPaste() PublicPaste {
 	return PublicPaste{
-		ID:    shortURIfromID(p.ID),
+		ID:    ShortURIfromID(p.ID),
 		Paste: *p,
 	}
 }
 
-type Pastes []Paste
-type PublicPastes []PublicPaste
+type (
+	Pastes       []Paste
+	PublicPastes []PublicPaste
+)
 
-func shortURIfromID(id uint) string {
+func ShortURIfromID(id uint) string {
 	uri := ""
 	for id > 0 {
 		uri = string(validChars[id%uint(len(validChars))]) + uri
@@ -38,10 +41,10 @@ func shortURIfromID(id uint) string {
 	return uri
 }
 
-/*func idFromShortURI(uri string) uint {
+func IDFromShortURI(uri string) uint {
 	id := uint(0)
 	for _, c := range uri {
 		id = id*uint(len(validChars)) + uint(strings.Index(validChars, string(c)))
 	}
 	return id
-}*/
+}
