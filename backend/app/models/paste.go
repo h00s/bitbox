@@ -16,7 +16,7 @@ type Paste struct {
 }
 
 type PublicPaste struct {
-	ID string
+	ID string `json:"id"`
 	Paste
 }
 
