@@ -24,3 +24,11 @@ func (p *PastesService) Create(paste models.Paste) (models.PublicPaste, error) {
 	}
 	return paste.ToPublicPaste(), nil
 }
+
+func (p *PastesService) Update(shortID string, paste models.Paste) (models.PublicPaste, error) {
+	id := models.IDFromShortURI(shortID)
+	if err := p.DB.Omit(models.PasteOmittedParams...).Model(&models.Paste{}).Where("id = ?", id).Updates(paste).Error; err != nil {
+		return paste.ToPublicPaste(), err
+	}
+	return paste.ToPublicPaste(), nil
+}
