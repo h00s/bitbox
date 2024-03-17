@@ -19,7 +19,7 @@ func (p *PastesService) Get(shortID string) (models.PublicPaste, error) {
 }
 
 func (p *PastesService) Create(paste models.Paste) (models.PublicPaste, error) {
-	if err := p.DB.Create(&paste).Error; err != nil {
+	if err := p.DB.Omit(models.PasteOmittedParams...).Create(&paste).Error; err != nil {
 		return paste.ToPublicPaste(), err
 	}
 	return paste.ToPublicPaste(), nil

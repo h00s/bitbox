@@ -7,6 +7,8 @@ import (
 
 const validChars = "bcdfghmnprstvz23456789"
 
+var PasteOmittedParams = []string{"CreatedAt", "UpdatedAt", "ID"}
+
 type Paste struct {
 	ID        uint      `gorm:"primaryKey" json:"id"`
 	Title     string    `json:"title"`
