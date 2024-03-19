@@ -9,6 +9,11 @@ const validChars = "bcdfghmnprstvz23456789"
 
 var PasteOmittedParams = []string{"CreatedAt", "UpdatedAt", "ID"}
 
+type (
+	Pastes       []Paste
+	PublicPastes []PublicPaste
+)
+
 type Paste struct {
 	ID        uint      `gorm:"primaryKey" json:"id"`
 	Title     string    `json:"title"`
@@ -28,11 +33,6 @@ func (p *Paste) ToPublicPaste() PublicPaste {
 		Paste: *p,
 	}
 }
-
-type (
-	Pastes       []Paste
-	PublicPastes []PublicPaste
-)
 
 func ShortURIfromID(id uint) string {
 	uri := ""
