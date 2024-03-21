@@ -7,7 +7,7 @@ import (
 
 const validChars = "bcdfghmnprstvz23456789"
 
-var PasteOmittedParams = []string{"CreatedAt", "UpdatedAt", "ID"}
+var PastePermittedParams = []string{"Title", "Content"}
 
 type (
 	Pastes       []Paste
