@@ -19,8 +19,7 @@ func (pc *PastesController) Pastes() *services.PastesService {
 }
 
 func (hc *PastesController) Get(c *raptor.Context) error {
-	shortID := c.Params("id")
-	paste, err := hc.Pastes().Get(shortID)
+	paste, err := hc.Pastes().GetByShortID(c.Params("id"))
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.JSON("Not found", http.StatusNotFound)
