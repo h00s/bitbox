@@ -12,14 +12,11 @@ import (
 
 type PastesController struct {
 	raptor.Controller
-}
-
-func (pc *PastesController) Pastes() *services.PastesService {
-	return pc.Services["PastesService"].(*services.PastesService)
+	Pastes *services.PastesService
 }
 
 func (hc *PastesController) Get(c *raptor.Context) error {
-	paste, err := hc.Pastes().GetByShortID(c.Params("id"))
+	paste, err := hc.Pastes.GetByShortID(c.Params("id"))
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.JSON("Not found", http.StatusNotFound)
@@ -35,7 +32,7 @@ func (hc *PastesController) Create(c *raptor.Context) error {
 	if err := c.BodyParser(&paste); err != nil {
 		return c.JSON("Invalid input", http.StatusBadRequest)
 	}
-	p, err := hc.Pastes().Create(paste)
+	p, err := hc.Pastes.Create(paste)
 	if err != nil {
 		return c.JSON("Internal error", http.StatusInternalServerError)
 	}
@@ -48,7 +45,7 @@ func (hc *PastesController) Update(c *raptor.Context) error {
 	if err := c.BodyParser(&paste); err != nil {
 		return c.JSON("Invalid input", http.StatusBadRequest)
 	}
-	p, err := hc.Pastes().Update(shortID, paste)
+	p, err := hc.Pastes.Update(shortID, paste)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.JSON("Not found", http.StatusNotFound)
