@@ -17,6 +17,8 @@ github.com/go-raptor/raptor v0.7.2 h1:n7/V1JF4k+BvTipolbIoQCjf2snHGwchyg3uf4Zs+e
 github.com/go-raptor/raptor v0.7.2/go.mod h1:oUJGVNhxNfTs9Xyrk+/BaCuGArxeCqFxAQkurCmTE24=
 github.com/go-raptor/raptor v0.8.1 h1:Lngf5iykNyDmb+w2l6npmRxKKLXQH82bsiZrFrXv39c=
 github.com/go-raptor/raptor v0.8.1/go.mod h1:ph+zDr3/xxVHS6AOGg8XWs9VGAbJpGex5fdPgPC38kA=
+github.com/go-raptor/raptor v0.8.3 h1:1wfrUnoZ4R++Ocy8CC0fnRuaCEkXh0Dej/+3I0Kxh+A=
+github.com/go-raptor/raptor v0.8.3/go.mod h1:ph+zDr3/xxVHS6AOGg8XWs9VGAbJpGex5fdPgPC38kA=
 github.com/gofiber/fiber/v2 v2.52.2 h1:b0rYH6b06Df+4NyrbdptQL8ifuxw/Tf2DgfkZkDaxEo=
 github.com/gofiber/fiber/v2 v2.52.2/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
 github.com/gofiber/fiber/v2 v2.52.4 h1:P+T+4iK7VaqUsq2PALYEfBBo6bJZ4q3FP8cZ84EggTM=
