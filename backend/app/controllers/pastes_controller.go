@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/go-raptor/raptor"
+	"github.com/go-raptor/raptor/v2"
 	"github.com/h00s/bitbox/app/models"
 	"github.com/h00s/bitbox/app/services"
 	"gorm.io/gorm"
@@ -29,7 +29,7 @@ func (hc *PastesController) Get(c *raptor.Context) error {
 
 func (hc *PastesController) Create(c *raptor.Context) error {
 	var paste models.Paste
-	if err := c.BodyParser(&paste); err != nil {
+	if err := c.Bind().Body(&paste); err != nil {
 		return c.JSON("Invalid input", http.StatusBadRequest)
 	}
 	p, err := hc.Pastes.Create(paste)
@@ -42,7 +42,7 @@ func (hc *PastesController) Create(c *raptor.Context) error {
 func (hc *PastesController) Update(c *raptor.Context) error {
 	shortID := c.Params("id")
 	var paste models.Paste
-	if err := c.BodyParser(&paste); err != nil {
+	if err := c.Bind().Body(&paste); err != nil {
 		return c.JSON("Invalid input", http.StatusBadRequest)
 	}
 	p, err := hc.Pastes.Update(shortID, paste)
