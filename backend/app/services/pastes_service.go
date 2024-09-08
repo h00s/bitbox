@@ -1,7 +1,9 @@
 package services
 
 import (
-	"github.com/go-raptor/raptor/v2"
+	"context"
+
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/bitbox/app/models"
 )
 
@@ -9,12 +11,14 @@ type PastesService struct {
 	raptor.Service
 }
 
-func (ps *PastesService) Get(id uint) (models.PublicPaste, error) {
+func (ps *PastesService) Get(id int64) (models.PublicPaste, error) {
 	var paste models.Paste
-	if err := ps.DB.First(&paste, id).Error; err != nil {
-		return paste.ToPublicPaste(), err
-	}
-	return paste.ToPublicPaste(), nil
+	err := ps.DB.
+		NewSelect().
+		Model(&paste).
+		Where("id = ?", id).
+		Scan(context.Background())
+	return paste.ToPublicPaste(), err
 }
 
 func (ps *PastesService) GetByShortID(shortID string) (models.PublicPaste, error) {
@@ -22,9 +26,12 @@ func (ps *PastesService) GetByShortID(shortID string) (models.PublicPaste, error
 }
 
 func (ps *PastesService) Create(paste models.Paste) (models.PublicPaste, error) {
-	err := ps.DB.
-		Select(models.PastePermittedParams).
-		Create(&paste).Error
+	_, err := ps.DB.
+		NewInsert().
+		Model(&paste).
+		Column(models.PastePermittedParams...).
+		Returning("id").
+		Exec(context.Background())
 	if err != nil {
 		return paste.ToPublicPaste(), err
 	}
@@ -33,11 +40,11 @@ func (ps *PastesService) Create(paste models.Paste) (models.PublicPaste, error) 
 
 func (ps *PastesService) Update(shortID string, paste models.Paste) (models.PublicPaste, error) {
 	id := models.IDFromShortURI(shortID)
-	err := ps.DB.
-		Select(models.PastePermittedParams).
-		Model(&models.Paste{}).
+	_, err := ps.DB.NewUpdate().
+		Model(&paste).
+		Column(models.PastePermittedParams...).
 		Where("id = ?", id).
-		Updates(paste).Error
+		Exec(context.Background())
 	if err != nil {
 		return paste.ToPublicPaste(), err
 	}

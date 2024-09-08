@@ -7,7 +7,7 @@ import (
 
 const validChars = "bcdfghmnprstvz23456789"
 
-var PastePermittedParams = []string{"Title", "Content"}
+var PastePermittedParams = []string{"title", "content"}
 
 type (
 	Pastes       []Paste
@@ -15,11 +15,11 @@ type (
 )
 
 type Paste struct {
-	ID        uint      `gorm:"primaryKey" json:"id"`
-	Title     string    `json:"title"`
-	Content   string    `gorm:"type:text" json:"content"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        int64     `json:"id" bun:"id,pk,autoincrement"`
+	Title     string    `json:"title" bun:"title,notnull"`
+	Content   string    `json:"content" bun:"content,notnull"`
+	CreatedAt time.Time `json:"created_at" bun:"created_at,notnull,default:current_timestamp"`
+	UpdatedAt time.Time `json:"updated_at" bun:"updated_at,notnull,default:current_timestamp"`
 }
 
 type PublicPaste struct {
@@ -34,19 +34,19 @@ func (p *Paste) ToPublicPaste() PublicPaste {
 	}
 }
 
-func ShortURIfromID(id uint) string {
+func ShortURIfromID(id int64) string {
 	uri := ""
 	for id > 0 {
-		uri = string(validChars[id%uint(len(validChars))]) + uri
-		id = id / uint(len(validChars))
+		uri = string(validChars[id%int64(len(validChars))]) + uri
+		id = id / int64(len(validChars))
 	}
 	return uri
 }
 
-func IDFromShortURI(uri string) uint {
-	id := uint(0)
+func IDFromShortURI(uri string) int64 {
+	id := int64(0)
 	for _, c := range uri {
-		id = id*uint(len(validChars)) + uint(strings.Index(validChars, string(c)))
+		id = id*int64(len(validChars)) + int64(strings.Index(validChars, string(c)))
 	}
 	return id
 }

@@ -1,13 +1,11 @@
 package controllers
 
 import (
-	"errors"
 	"net/http"
 
-	"github.com/go-raptor/raptor/v2"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/bitbox/app/models"
 	"github.com/h00s/bitbox/app/services"
-	"gorm.io/gorm"
 )
 
 type PastesController struct {
@@ -16,42 +14,36 @@ type PastesController struct {
 }
 
 func (hc *PastesController) Get(c *raptor.Context) error {
-	paste, err := hc.Pastes.GetByShortID(c.Params("id"))
+	paste, err := hc.Pastes.GetByShortID(c.Param("id"))
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return c.JSON("Not found", http.StatusNotFound)
-		} else {
-			return c.JSON("Internal error", http.StatusInternalServerError)
-		}
+		return c.JSONError(raptor.NewErrorNotFound("Paste not found"))
 	}
-	return c.JSON(paste)
+	return c.JSON(paste.ToPublicPaste())
 }
 
 func (hc *PastesController) Create(c *raptor.Context) error {
 	var paste models.Paste
-	if err := c.Bind().Body(&paste); err != nil {
+	if err := c.Bind(&paste); err != nil {
 		return c.JSON("Invalid input", http.StatusBadRequest)
 	}
 	p, err := hc.Pastes.Create(paste)
 	if err != nil {
-		return c.JSON("Internal error", http.StatusInternalServerError)
+		hc.Log.Error(err.Error())
+		return c.JSONError(raptor.NewErrorInternal(err.Error()))
 	}
 	return c.JSON(p, http.StatusCreated)
 }
 
 func (hc *PastesController) Update(c *raptor.Context) error {
-	shortID := c.Params("id")
+	shortID := c.Param("id")
 	var paste models.Paste
-	if err := c.Bind().Body(&paste); err != nil {
-		return c.JSON("Invalid input", http.StatusBadRequest)
+	if err := c.Bind(&paste); err != nil {
+		return c.JSONError(raptor.NewErrorBadRequest("Invalid input"))
 	}
 	p, err := hc.Pastes.Update(shortID, paste)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return c.JSON("Not found", http.StatusNotFound)
-		} else {
-			return c.JSON("Internal error", http.StatusInternalServerError)
-		}
+		hc.Log.Error(err.Error())
+		return c.JSONError(raptor.NewErrorInternal(err.Error()))
 	}
 	return c.JSON(p)
 }
