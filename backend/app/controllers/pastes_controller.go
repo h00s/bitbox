@@ -16,7 +16,7 @@ type PastesController struct {
 func (hc *PastesController) Get(c *raptor.Context) error {
 	paste, err := hc.Pastes.GetByShortID(c.Param("id"))
 	if err != nil {
-		return c.JSONError(raptor.NewErrorNotFound("Paste not found"))
+		return c.JSONError(err)
 	}
 	return c.JSON(paste.ToPublicPaste())
 }
@@ -28,8 +28,7 @@ func (hc *PastesController) Create(c *raptor.Context) error {
 	}
 	p, err := hc.Pastes.Create(paste)
 	if err != nil {
-		hc.Log.Error(err.Error())
-		return c.JSONError(raptor.NewErrorInternal(err.Error()))
+		return c.JSONError(err)
 	}
 	return c.JSON(p, http.StatusCreated)
 }
@@ -42,8 +41,7 @@ func (hc *PastesController) Update(c *raptor.Context) error {
 	}
 	p, err := hc.Pastes.Update(shortID, paste)
 	if err != nil {
-		hc.Log.Error(err.Error())
-		return c.JSONError(raptor.NewErrorInternal(err.Error()))
+		return c.JSONError(err)
 	}
 	return c.JSON(p)
 }
