@@ -9,6 +9,5 @@ func Routes() raptor.Routes {
 			raptor.Route("PATCH", "pastes/:id", "PastesController", "Update"),
 			raptor.Route("POST", "pastes", "PastesController", "Create"),
 		),
-		// raptor.Route("GET", "/*", "SPAController", "Index"),
 	)
 }

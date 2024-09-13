@@ -13,6 +13,10 @@ github.com/go-raptor/raptor/v3 v3.0.0-alpha.4 h1:e45asXTcUUdfqIiBLIzg/mBtou2fnIY
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.4/go.mod h1:rUUZhJZs5oax5yNcjbn8Rcp9PFGBbVZqaNfDPTaHl08=
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.5 h1:0/ojw+ckfpbi9MlXVToMQqgvM89ivnKX8gFGxRoeq7E=
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.5/go.mod h1:rUUZhJZs5oax5yNcjbn8Rcp9PFGBbVZqaNfDPTaHl08=
+github.com/go-raptor/raptor/v3 v3.0.0-alpha.6 h1:Nha2jfwda5oh1YL17eaP7YF/dRT85iDvxpDsL6K5MbQ=
+github.com/go-raptor/raptor/v3 v3.0.0-alpha.6/go.mod h1:rUUZhJZs5oax5yNcjbn8Rcp9PFGBbVZqaNfDPTaHl08=
+github.com/go-raptor/raptor/v3 v3.0.0-alpha.7 h1:6rWWF3alzu1CFEPFvlqpaOt/JMerangZfGq3RwEKCfw=
+github.com/go-raptor/raptor/v3 v3.0.0-alpha.7/go.mod h1:rUUZhJZs5oax5yNcjbn8Rcp9PFGBbVZqaNfDPTaHl08=
 github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keLg81eXfW3O+oY=
 github.com/golang-jwt/jwt v3.2.2+incompatible/go.mod h1:8pz2t5EyA70fFQQSrl6XZXzqecmYZeUEB8OUGHkxJ+I=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=

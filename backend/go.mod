@@ -8,7 +8,7 @@ go 1.23.1
 
 require (
 	github.com/go-raptor/connector/bun/postgres v1.0.0
-	github.com/go-raptor/raptor/v3 v3.0.0-alpha.5
+	github.com/go-raptor/raptor/v3 v3.0.0-alpha.7
 )
 
 require (
