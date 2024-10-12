@@ -1,16 +1,18 @@
 package initializers
 
 import (
+	"github.com/go-raptor/connector/bun/postgres"
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/bitbox/config"
+	"github.com/h00s/bitbox/db"
 )
 
 func App(c *raptor.Config) *raptor.AppInitializer {
 	return &raptor.AppInitializer{
-		Routes:      config.Routes(),
-		Database:    Database(),
-		Services:    Services(),
-		Middlewares: Middlewares(),
-		Controllers: Controllers(),
+		Routes:            config.Routes(),
+		DatabaseConnector: postgres.NewPostgresConnector(c.DatabaseConfig, db.Migrations()),
+		Services:          Services(),
+		Middlewares:       Middlewares(),
+		Controllers:       Controllers(),
 	}
 }

@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/bitbox/app/models"
+	"github.com/uptrace/bun"
 )
 
 type PastesService struct {
@@ -14,7 +15,7 @@ type PastesService struct {
 
 func (ps *PastesService) Get(id int64) (models.PublicPaste, error) {
 	var paste models.Paste
-	err := ps.DB.
+	err := ps.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&paste).
 		Where("id = ?", id).
@@ -33,7 +34,7 @@ func (ps *PastesService) GetByShortID(shortID string) (models.PublicPaste, error
 }
 
 func (ps *PastesService) Create(paste models.Paste) (models.PublicPaste, error) {
-	_, err := ps.DB.
+	_, err := ps.DB.Conn().(*bun.DB).
 		NewInsert().
 		Model(&paste).
 		Column(models.PastePermittedParams...).
@@ -47,7 +48,8 @@ func (ps *PastesService) Create(paste models.Paste) (models.PublicPaste, error) 
 
 func (ps *PastesService) Update(shortID string, paste models.Paste) (models.PublicPaste, error) {
 	id := models.IDFromShortURI(shortID)
-	_, err := ps.DB.NewUpdate().
+	_, err := ps.DB.Conn().(*bun.DB).
+		NewUpdate().
 		Model(&paste).
 		Column(models.PastePermittedParams...).
 		Where("id = ?", id).

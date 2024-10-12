@@ -3,11 +3,11 @@ package migrate
 import (
 	"context"
 
-	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/bitbox/app/models"
+	"github.com/uptrace/bun"
 )
 
-func AddPaste(db *raptor.DB) error {
+func AddPaste(db *bun.DB) error {
 	_, err := db.NewCreateTable().
 		Model(&models.Paste{}).
 		IfNotExists().
