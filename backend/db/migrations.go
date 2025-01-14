@@ -7,6 +7,6 @@ import (
 
 func Migrations() postgres.Migrations {
 	return postgres.Migrations{
-		1: migrate.AddPaste,
+		"20250114101729": &migrate.CreatePaste{},
 	}
 }
