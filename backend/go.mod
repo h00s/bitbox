@@ -1,6 +1,6 @@
 module github.com/h00s/bitbox
 
-go 1.23.4
+go 1.23.5
 
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
@@ -8,7 +8,7 @@ go 1.23.4
 
 require (
 	github.com/go-raptor/connector/bun/postgres v1.0.7
-	github.com/go-raptor/raptor/v3 v3.2.0
+	github.com/go-raptor/raptor/v3 v3.2.1
 	github.com/uptrace/bun v1.2.8
 )
 

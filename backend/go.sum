@@ -9,6 +9,8 @@ github.com/go-raptor/connector/bun/postgres v1.0.7 h1:fqS03y7HiUNZefRV0Kk4TXzE15
 github.com/go-raptor/connector/bun/postgres v1.0.7/go.mod h1:zNIlzG92itndWX2aa5Dr86fiUlGmfpuUT/W/kgbQkxg=
 github.com/go-raptor/raptor/v3 v3.2.0 h1:KUmaKsXtlZYohl89EPwYbDG27N0J7A5vU6xVa1T55Ss=
 github.com/go-raptor/raptor/v3 v3.2.0/go.mod h1:zqM91aRUKBc0kZx+VQkUqGe8wFAEIVeDYQPDJJq1ciU=
+github.com/go-raptor/raptor/v3 v3.2.1 h1:CnysAWU5iNG7wWq9c8kjN/loMfm5S+D0eL47FCvJOCs=
+github.com/go-raptor/raptor/v3 v3.2.1/go.mod h1:zqM91aRUKBc0kZx+VQkUqGe8wFAEIVeDYQPDJJq1ciU=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
 github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
 github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
