@@ -1,14 +1,21 @@
 package main
 
 import (
-	"github.com/go-raptor/raptor/v3"
-	"github.com/h00s/bitbox/config/initializers"
+	"log/slog"
+	"os"
+
+	"github.com/go-raptor/raptor/v4"
+	"github.com/h00s/bitbox/config"
+	"github.com/h00s/bitbox/config/components"
+	"github.com/lmittmann/tint"
 )
 
 func main() {
-	r := raptor.NewRaptor()
-
-	r.Init(initializers.App(r.Utils.Config))
-
-	r.Listen()
+	raptor.New(
+		components.New(),
+		config.Routes(),
+		raptor.WithLogHandler(func(level *slog.LevelVar) slog.Handler {
+			return tint.NewHandler(os.Stderr, &tint.Options{Level: level})
+		}),
+	).Run()
 }

@@ -1,13 +1,17 @@
 package config
 
-import "github.com/go-raptor/raptor/v3"
+import (
+	_ "embed"
 
-func Routes() raptor.Routes {
-	return raptor.CollectRoutes(
-		raptor.Scope("api/v1",
-			raptor.Get("pastes/:id", "Pastes#Get"),
-			raptor.Patch("pastes/:id", "Pastes#Update"),
-			raptor.Post("pastes", "Pastes#Create"),
-		),
-	)
+	"github.com/go-raptor/raptor/v4"
+	"github.com/go-raptor/raptor/v4/router"
+)
+
+//go:embed routes.yaml
+var routesYAML []byte
+
+var routes = raptor.Must(router.ParseRoutesYAML(routesYAML))
+
+func Routes() router.Routes {
+	return routes
 }

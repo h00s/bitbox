@@ -1,0 +1,4 @@
+routes:
+  /api/v1:
+    /health:
+      GET: Health.Get

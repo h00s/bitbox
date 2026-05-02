@@ -1,0 +1,17 @@
+general:
+  log_level: debug
+
+server:
+  address: localhost
+  port: 3000
+  shutdown_timeout: 3
+  read_timeout: 0
+  read_header_timeout: 10
+  write_timeout: 0
+  idle_timeout: 120
+  max_header_bytes: 1048576
+  max_body_bytes: 0
+  ip_extractor: direct
+
+app:
+  cors_allow_origins: "http://localhost:5173"
